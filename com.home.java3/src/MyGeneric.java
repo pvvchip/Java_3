@@ -20,7 +20,7 @@ public class MyGeneric<T> {
 
     public ArrayList<T> arList() {
         ArrayList<T> al = new ArrayList<>();
-        for (T i:this.object) al.add(i);
+        for (T i : this.object) al.add(i);
         return al;
     }
 }
