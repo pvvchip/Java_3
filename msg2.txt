@@ -1,0 +1,3 @@
+Auth ok!
+nick2 : test1
+nick2 : test2
