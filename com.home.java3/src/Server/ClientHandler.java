@@ -5,6 +5,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ClientHandler {
     //    private Socket socket;
@@ -12,6 +15,7 @@ public class ClientHandler {
     private PrintWriter pw;
     private Scanner sc;
     private String nick;
+    public ExecutorService service;
 
     public ClientHandler(Socket socket, Server server) {
 //        this.socket = socket;
@@ -19,42 +23,56 @@ public class ClientHandler {
 
 
         try {
-            sc = new Scanner(socket.getInputStream());
-            pw = new PrintWriter(socket.getOutputStream(), true);
-            new Thread(() -> {
-                try {
-                    auth();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(nick + " handler waiting for new massages");
-                while (socket.isConnected()) {
-                    String s = sc.nextLine();
-                    String toNick;
-                    String[] commands = s.split(" ");
-                    if (s != null && s.equals("/exit"))
-                        server.unsubscribe(this);
-                    if (s != null && commands[0].equals("/w")){
-                        System.out.println("Privat from " + nick + s);
-                        if (commands.length >= 3) {
-                            toNick = commands[1];
-                            commands[0] = "";
-                            commands[1] = "";
-                            s = String.join(" ", commands);
-                            server.sendUnicastMessage(nick, toNick, s);
-                        }
-                        continue;
+            try {
+                sc = new Scanner(socket.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                pw = new PrintWriter(socket.getOutputStream(), true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ExecutorService executorService = Executors.newFixedThreadPool(100);
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        auth();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
                     }
-                    if (s != null && !s.isEmpty())
-                        server.sendBroadcastMessage(nick + " : " + s);
+
+                    System.out.println(nick + " handler waiting for new massages");
+                    while (socket.isConnected()) {
+                        String s = sc.nextLine();
+                        String toNick;
+                        String[] commands = s.split(" ");
+                        if (s != null && s.equals("/exit"))
+                            server.unsubscribe(this);
+                        if (s != null && commands[0].equals("/w")) {
+                            System.out.println("Privat from " + nick + s);
+                            if (commands.length >= 3) {
+                                toNick = commands[1];
+                                commands[0] = "";
+                                commands[1] = "";
+                                s = String.join(" ", commands);
+                                server.sendUnicastMessage(nick, toNick, s);
+                            }
+                            continue;
+                        }
+                        if (s != null && !s.isEmpty())
+                            server.sendBroadcastMessage(nick + " : " + s);
+                    }
                 }
-            }).start();
-        } catch (IOException e) {
+            });
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
+
 
     /**
      * Wait for command: "/auth login1 pass1"

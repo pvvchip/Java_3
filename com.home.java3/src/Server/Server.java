@@ -103,4 +103,7 @@ public class Server {
     public myBase getBase() {
         return base;
     }
+
+    public void unsubscribe(Runnable runnable) {
+    }
 }
