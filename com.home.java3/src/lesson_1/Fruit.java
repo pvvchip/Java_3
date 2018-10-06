@@ -1,3 +1,5 @@
+package lesson_1;
+
 public class Fruit {
     private static float weight;
 
