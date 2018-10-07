@@ -1,4 +1,4 @@
-package Client;
+package lesson_4.Client;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;

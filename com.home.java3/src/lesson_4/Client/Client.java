@@ -1,4 +1,4 @@
-package Client;
+package lesson_4.Client;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -19,7 +19,7 @@ public class Client extends JFrame implements ClientUI {
         this.index = index;
 
         setBounds(600, 300, 500, 500);
-        setTitle("Client");
+        setTitle("lesson_4/Client");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         jta = new JTextArea();

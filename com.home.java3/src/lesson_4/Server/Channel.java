@@ -1,4 +1,4 @@
-package Server;
+package lesson_4.Server;
 
 public interface Channel {
 

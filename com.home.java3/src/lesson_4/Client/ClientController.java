@@ -1,4 +1,4 @@
-package Client;
+package lesson_4.Client;
 
 import java.io.IOException;
 import java.io.PrintWriter;

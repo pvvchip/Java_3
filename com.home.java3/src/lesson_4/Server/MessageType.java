@@ -1,4 +1,4 @@
-package Server;
+package lesson_4.Server;
 
 public enum MessageType {
     AUTH_MESSAGE,

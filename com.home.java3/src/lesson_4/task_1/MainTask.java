@@ -1,4 +1,4 @@
-package task_1;
+package lesson_4.task_1;
 
 
 //Почемуто не работает как надо

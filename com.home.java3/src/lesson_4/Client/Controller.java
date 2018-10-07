@@ -1,4 +1,4 @@
-package Client;
+package lesson_4.Client;
 
 public interface Controller {
     void sendMessage(String msg);

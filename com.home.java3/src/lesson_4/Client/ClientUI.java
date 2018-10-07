@@ -1,4 +1,4 @@
-package Client;
+package lesson_4.Client;
 
 public interface ClientUI {
     void showUI();
