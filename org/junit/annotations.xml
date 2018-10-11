@@ -1,4 +1,7 @@
 <root>
+    <item name='org.junit.After'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
     <item name='org.junit.Before'>
         <annotation name='java.lang.Deprecated'/>
     </item>
