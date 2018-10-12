@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 public class ClientHandler {
     //    private Socket socket;
@@ -15,6 +16,7 @@ public class ClientHandler {
     private Scanner sc;
     private String nick;
     public ExecutorService service;
+    private static Logger log = Logger.getLogger(ClientHandler.class.getName());
 
     public ClientHandler(Socket socket, Server server) {
 //        this.socket = socket;
@@ -77,6 +79,7 @@ public class ClientHandler {
      * Wait for command: "/auth login1 pass1"
      */
     private void auth() throws SQLException, ClassNotFoundException {
+        String msg = null;
         while (true) {
             if (!sc.hasNextLine()) continue;
             String s = sc.nextLine();
@@ -85,35 +88,39 @@ public class ClientHandler {
                 if (commands.length >= 3) {
                     String login = commands[1];
                     String password = commands[2];
-                    System.out.println("Try to login with " + login + " and " + password);
+                    msg = "Try to login with " + login + " and " + password;
+                    System.out.println(msg);
                     String nick = server.getAuthService()
                             .authByLoginAndPassword(login, password);
                     if (nick == null) {
-                        String msg = "Invalid login or password";
+                        msg = "Invalid login or password";
                         System.out.println(msg);
                         pw.println(msg);
                         pw.println("end session");
                     } else if (server.isNickTaken(nick)) {
-                        String msg = "Nick " + nick + " already taken!";
+                        msg = "Nick " + nick + " already taken!";
                         System.out.println(msg);
                         pw.println(msg);
                         pw.println("end session");
                     } else {
                         this.nick = nick;
-                        String msg = "Auth ok!";
+                        msg = "Auth ok!";
                         System.out.println(msg);
                         pw.println(msg);
                         server.subscribe(this);
+                        log.info(msg);
                         break;
                     }
                 }
             } else {
                 pw.println("Invalid command!");
             }
+            log.info(msg);
         }
     }
 
     public void sendMessage(String msg) {
+        log.info(msg);
         pw.println(msg);
     }
 
