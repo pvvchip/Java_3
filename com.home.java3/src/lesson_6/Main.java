@@ -5,14 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    //    protected static int[] arr = {1, 2, 4, 4, 2, 3, 4, 1, 7};
-    protected static int[] arr = {2, 3, 4, 6, 7, 8, 9};
-    protected static int[] arr2 = {1, 4, 1, 4, 4, 4, 1, 2, 1};
-
-    protected static List<Integer> arrList = new ArrayList<>();
-
 
     protected static List<Integer> operation(int[] i) {
+        List<Integer> arrList = new ArrayList<>();
+
+        int[] arr = {2, 3, 4, 6, 7, 8, 9};
         System.out.println("Test1: " + Arrays.toString(i));
         int n = -1;
         for (int j = 0; j < i.length; j++) {
@@ -41,6 +38,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        int[] arr = {2, 3, 4, 6, 7, 8, 9};
+        int[] arr2 = {1, 4, 1, 4, 4, 4, 1, 2, 1};
         System.out.println("Test1: " + operation(arr));
         System.out.println("Test2: " + operation2(arr2));
     }

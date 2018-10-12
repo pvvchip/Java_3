@@ -12,10 +12,7 @@ import static lesson_6.Main.operation;
 
 public class MainTest {
 
-
     @Test
-    // При одиночном запуске ОК
-    // При запуске всех тестов Failed ?
     public void operationTest() {
         int[] arr = {2, 3, 4, 6, 7, 8, 9};
         List<Integer> arr3 = Arrays.asList(6, 7, 8, 9);
@@ -37,8 +34,6 @@ public class MainTest {
     }
 
     @Test
-    // При одиночном запуске ОК
-    // При запуске всех тестов Failed ?
     public void operationTest4() {
         int[] arr = {2, 3, 0, 4, 7, 3, 9};
         List<Integer> arr3 = Arrays.asList(7, 8, 9);
