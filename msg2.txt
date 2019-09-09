@@ -1,3 +1,6 @@
 Auth ok!
 nick2 : test1
 nick2 : test2
+Auth ok!
+Nick nick2 already taken!
+Ошибка авторизации.
