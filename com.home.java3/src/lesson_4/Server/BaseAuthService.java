@@ -47,17 +47,17 @@ public class BaseAuthService implements AuthService {
     @Override
     public User createOrActivateUser(String login, String password, String nick) {
 
+        Factory factory = new Factory();
 
-
-        User user = new User(login, password, nick);
+        User userImp = factory.getUser("client_1");
         if (users.containsKey(nick)) {
             users.get(nick).setActive(true);
             System.out.println("User with nick " + nick + "already exist");
         } else {
-            users.put(nick, user);
+            users.put(nick, userImp);
             persist();
         }
-        return user;
+        return userImp;
     }
 
     private void persist() {
@@ -67,9 +67,9 @@ public class BaseAuthService implements AuthService {
 
     @Override
     public boolean deactivateUser(String nick) {
-        User user = users.get(nick);
-        if (user != null) {
-            user.setActive(false);
+        User userImp = users.get(nick);
+        if (userImp != null) {
+            userImp.setActive(false);
             return true;
         }
         return false;
